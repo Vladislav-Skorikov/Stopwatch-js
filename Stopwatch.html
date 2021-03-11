@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Stopwatch</title>
+    <script>
+
+        window.onload = function () {
+            var ms = 0, sec = 0, min = 0, counter = 0, intervalHandler;
+            var timer = get("timer");
+            function count() {
+                if (ms == 0 && sec == 0 && min == 0) {
+                    timer.innerHTML = "00:00:00";
+                }
+                else if (ms < 10 && sec < 10) {
+                    timer.innerHTML = "0" + min + ":0" + sec + ":0" + ms;
+                }
+                else if (sec > 10 && ms < 10) {
+                    timer.innerHTML = "0" + min + ":" + sec + ":0" + ms;
+                }
+                else if (sec < 10) {
+                    timer.innerHTML = "0" + min + ":0" + sec + ":" + ms;
+                }
+                else if (min < 10) {
+                    timer.innerHTML = "0" + min + ":" + sec + ":" + ms;
+                }
+                ms++;
+                if (ms > 99) {
+                    ms = 0;
+                    sec++;
+                    if (sec > 59) {
+                        sec = 0;
+                        min++;
+                    }
+                }
+            }
+
+            get("startButton").onclick = function () {
+                intervalHandler = setInterval(count, 0);
+            }
+            get("stopButton").onclick = function () {
+                clearInterval(intervalHandler);
+            }
+            get("resetButton").onclick = function () {
+                ms = 0;
+                sec = 0;
+                min = 0;
+                get("timer").innerHTML = "00:00:00";
+            }
+        }
+        var get = function (id) {
+            return document.getElementById(id);
+        }
+    </script>
+</head>
+<body>
+    <p id="timer">00:00:00</p>
+    <input id="startButton" type="button" value=" Start" />
+    <input id="stopButton" type="button" value="Stop " />
+    <input id="resetButton" type="button" value=" Reset" />
+</body>
+</html>
